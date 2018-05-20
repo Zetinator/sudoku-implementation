@@ -7,7 +7,7 @@ import java.util.*;
 import java.lang.*;
 import java.math.*;
 
-public class SudokuTime {
+public class Sudoku {
 
   //properties.
   public static int level = 1;
@@ -81,22 +81,22 @@ public class SudokuTime {
   public static void message ( String message ){
 
     //head.
-    System.out.print("Ã‰");
-    for(int i = 0; i < (message.length() + 20); i ++ )
-    System.out.print ("Ã ");
-    System.out.print ("Â»\n");
+    System.out.print("+");
+    for(int i = 0; i < (message.length() + 21); i ++ )
+    System.out.print ("-");
+    System.out.print ("+\n");
 
     //body.
-    System.out.print("Âº       ");
-    System.out.print( message );
-    System.out.print("       Âº\n");
+    System.out.print("|          ");
+    System.out.print(message);
+    System.out.print("           |\n");
 
     //foot
-    System.out.print("Ãˆ");
-    for(int i = 0; i < (message.length() + 20); i ++ )
-    System.out.print ("Ã ");
+    System.out.print("+");
+    for(int i = 0; i < (message.length() + 21); i ++ )
+    System.out.print ("-");
 
-    System.out.print ("Â¼\n\n");
+    System.out.print ("+\n\n");
 
   }
 
@@ -104,36 +104,57 @@ public class SudokuTime {
   public static void print_vector ( int[][] dataMatrix ){
 
 
-    System.out.println( " Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â²Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â²Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â° " );
+    System.out.print("+");
+    for(int i = 0; i < (dataMatrix.length*3 + 8); i ++ )
+    System.out.print ("=");
+
+    System.out.print ("+\n");
 
     for ( int f = 0; f < dataMatrix.length; f ++ ){
 
-      System.out.print(" Â° ");
+      System.out.print("|");
 
       for ( int c = 0; c < dataMatrix.length; c++){
 
-        if ( dataMatrix[f][c] != 0 )
-        System.out.print ( dataMatrix[f][c] );
-        else
-        System.out.print (" ");
+        if ( dataMatrix[f][c] != 0 ){
+          System.out.print (" ");
+          System.out.print (dataMatrix[f][c]);
+          System.out.print (" ");
 
-        if ( is_origin( f, c, load_game( level ) ) )
-        System.out.print (" ");
-        else
-        System.out.print (" ");
+        }
+        else{
+          System.out.print (" ");
+          System.out.print (" ");
+          System.out.print (" ");
 
-        if ( c == 2 || c == 5)
-        System.out.print ("Â² ");
-        else
-        System.out.print ("Â° ") ;
+        }
+
+        if ( c == 2 || c == 5 || c == 8){
+          System.out.print ("|");
+
+        }
+        else{
+          System.out.print (":") ;
+
+        }
 
       }
       System.out.println();
-      if ( f != 2 && f != 5)
-      System.out.print( " Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â²Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â²Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â°Â° " );
-      else
-      System.out.print( " Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â²Â² " );
-      System.out.println();
+      if ( f != 2 && f != 5 && f != 8){
+        System.out.print("+");
+        for(int i = 0; i < (dataMatrix.length*3 + 8); i ++ )
+        System.out.print ("-");
+
+        System.out.print ("+\n");
+      }
+      else{
+        System.out.print("+");
+        for(int i = 0; i < (dataMatrix.length*3 + 8); i ++ )
+        System.out.print ("=");
+
+        System.out.print ("+\n");
+
+      }
     }
   }
 
@@ -267,29 +288,29 @@ public class SudokuTime {
       value = Integer.parseInt( keyboard.readLine() );
 
       if ( !check_index(row) )
-      message ("Invalid row value..");
+      message ("Invalid row value...");
       else if ( !check_index(column) )
-      message ("Invalid column value..");
+      message ("Invalid column value...");
       else if ( !check_value(value) )
-      message ("Invalid value..");
+      message ("Invalid value...");
 
       //box availible.
       else if ( is_origin( (row - 1), (column - 1), load_game( level ) ) )
       message ( "Cannot modify this values, its predefined...");
 
       else if ( exist_row( value, row, sudoku ) )
-      message ("[X] Value " + value + " already used in the row..");
+      message ("[X] Value " + value + " already used in the row...");
 
       else if ( exist_column( value, column, sudoku ) )
-      message ("[X] Value " + value + " already used in the column..");
+      message ("[X] Value " + value + " already used in the column...");
 
       else if ( check_value( value, row, column, sudoku ) )
-      message ( "[X] already exist in the box..");
+      message ( "[X] already exist in the box...");
 
       //Write values in dataMatrix.
       else {
         sudoku[(row - 1)][(column - 1)] = value;
-        message( "[" + row + "," + column + "]=" + value + " Right.");
+        message( "[" + row + "," + column + "]=" + value + " Done  ");
       }
 
 
